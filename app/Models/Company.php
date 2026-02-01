@@ -1,0 +1,31 @@
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Company extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name', 'slug', 'logo', 'location', 'status', 'category_id', 'website'
+    ];
+
+    // Relation to jobs
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
+
+    // Optional: for category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function company()
+{
+    return $this->belongsTo(Company::class, 'company_id');
+}
+
+}

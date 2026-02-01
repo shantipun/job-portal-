@@ -1,0 +1,150 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.navbar-brand {
+    letter-spacing: -0.5px;
+}
+
+.form-control {
+    height: 42px;
+}
+
+.btn-primary {
+    background-color: #2557a7;
+    border-color: #2557a7;
+}
+
+.btn-primary:hover {
+    background-color: #1f4fa3;
+}
+
+.nav-link {
+    color: #2d2d2d;
+}
+
+.nav-link:hover {
+    color: #2557a7;
+}
+/* Job Listings */
+.job-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s ease;
+}
+
+.job-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.job-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2557a7;
+    text-decoration: none;
+}
+
+.job-title:hover {
+    text-decoration: underline;
+}
+
+.company {
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.location {
+    color: #555;
+    font-size: 14px;
+}
+
+.job-tags .badge {
+    background: #f3f2f1;
+    color: #333;
+    font-weight: 500;
+    margin-right: 6px;
+}
+
+.job-desc {
+    font-size: 14px;
+    color: #444;
+}
+
+.save-btn {
+    border-radius: 50%;
+}
+/* Job Detail */
+.job-detail-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.job-detail-card .badge {
+    background: #f3f2f1;
+    color: #333;
+    margin-right: 6px;
+    font-weight: 500;
+}
+
+.apply-box {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: 90px;
+}
+.company-review .review {
+    background-color: #f9f9f9;
+}
+.company-review .text-warning {
+    color: #ffc107;
+}
+.company-review hr {
+    border-top: 2px solid #eee;
+}
+/* SEARCH BOX */
+.search-box {
+    max-width: 1000px;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+.search-box input:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+}
+
+/* JOB CARD */
+.job-card {
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* JOB TAGS */
+.job-tags .badge {
+    margin-right: 5px;
+    font-size: 0.85rem;
+    padding: 0.4em 0.6em;
+}
+
+/* SAVE BUTTON */
+.save-btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.save-btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
