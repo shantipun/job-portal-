@@ -33,7 +33,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/jobs', [JobControllers::class, 'index'])->name('jobs.all');
 // Static job detail page
-Route::get('/jobs/{id}', [JobControllers::class, 'show'])->name('job.detail');
+
 Route::post('/jobs/{id}/apply', [JobControllers::class, 'apply'])->name('job.apply');
 
 // Company reviews page
@@ -112,8 +112,11 @@ Route::prefix('vendor')->group(function () {
     // Delete Job
     Route::delete('jobs/delete/{id}', [JobController::class, 'destroyJob'])->name('vendor.jobs.destroy');
 
-    Route::get('/applications', [ApplicationController::class, 'index'])->name('applications');
-    Route::get('/application-detail', [ApplicationController::class, 'show'])->name('applications');
+   Route::get('/applications', [ApplicationController::class, 'index'])
+    ->name('vendor.applications.index');
+
+Route::get('/application-detail', [ApplicationController::class, 'show'])
+    ->name('vendor.applications.show');
 
     
 });
@@ -132,9 +135,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile/update', [UserController::class, 'update'])
         ->name('profile.update');
 });
-Route::middleware(['auth', 'role:vendor'])->get('/vendor/dashboard', function () {
-    return view('vendor.dashboard');
-})->name('vendor.dashboard');
+
 
 Route::middleware(['auth', 'role:user'])->group(function () {
    Route::get('/user/dashboard', [DashboardController::class, 'index'])
@@ -202,7 +203,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::resource('categories', CategoryController::class);
 });
 
-Route::get('/company-search', [ReviewController::class, 'index'])->name('company.search');
+
 Route::get('/company-search/results', [CompanyController::class, 'search'])->name('company.search.results');
 Route::post('/jobs/{id}/save', [App\Http\Controllers\JobControllers::class, 'save'])->name('jobs.save')->middleware('auth');
 Route::post('/vendor/applications/{id}/status', [App\Http\Controllers\Vendor\ApplicationController::class, 'updateStatus'])
