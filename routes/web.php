@@ -211,9 +211,7 @@ Route::post('/vendor/applications/{id}/status', [App\Http\Controllers\Vendor\App
     ->middleware('auth:vendor'); // or 'auth' depending on your setup
 Route::patch('/vendor/applications/{id}', [App\Http\Controllers\Vendor\ApplicationController::class, 'update'])
     ->name('vendor.application.update');
-Route::post('/job/{job}/apply', [JobApplyController::class, 'store'])
-    ->middleware(['auth', 'role:user'])
-    ->name('job.apply');
+
 
 
     use App\Http\Controllers\Auth\ForgotPasswordController;
