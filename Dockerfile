@@ -1,35 +1,36 @@
-# Use official PHP image with Apache
-FROM php:8.2-apache
-
-WORKDIR /var/www/html
-
-# Install PHP extensions and system dependencies
-RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git \
-    && docker-php-ext-install pdo pdo_mysql zip
-
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
-# Copy project files
+# Stage 1 - Build Frontend (Vite)
+FROM node:18 AS frontend
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
+RUN npm run build
+
+# Stage 2 - Backend (Laravel + PHP + Composer)
+FROM php:8.2-fpm AS backend
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git curl unzip libpq-dev libonig-dev libzip-dev zip \
+    && docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+WORKDIR /var/www
 
-# Set folder permissions for Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Copy app files
+COPY . .
 
-# Fix Apache to serve the public folder
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+# Copy built frontend from Stage 1
+COPY --from=frontend /app/public/dist ./public/dist
 
-# Optional: set PHP timezone
-RUN echo "date.timezone=Asia/Kathmandu" > /usr/local/etc/php/conf.d/timezone.ini
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-EXPOSE 80
+# Laravel setup
+RUN php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan view:clear
 
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]
